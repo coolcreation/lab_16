@@ -7,7 +7,7 @@
 
 
 from menus import display_menu, display_tasklist_menu
-from validations import validate_category_number, validate_tasklist_command, validate_completed_number
+from validations import validate_category_number, validate_tasklist_command, validate_user_number
 from business_classes import Personal, PersonalItems, Business, BusinessItems
 
 
@@ -45,7 +45,7 @@ def add_business_todo(answer, business_items):
 
 
 def main():
-    print("Main")
+
     display_menu()
     display_tasklist_menu()
     
@@ -69,17 +69,22 @@ def main():
                     add_personal_todo(answer, personal_items)
                 elif task_command == "complete":
                     count = personal_items.get_item_count()
-
-                    num = validate_completed_number("Number: ", count)
+                    num = validate_user_number("Number: ", count)
                     for i, obj in enumerate(personal_items):
                         if i == (num - 1):
                             obj.is_complete = True
                             print(f"Number {num} has been marked as Completed\n")
-                    personal_items.save_items_to_csv()        
-                    
+                    personal_items.save_items_to_csv()                            
                     
                 elif task_command == "delete":
-                    print("Delete elif") 
+                    count = personal_items.get_item_count()
+                    num = validate_user_number("Number: ", count)
+                    for i, obj in enumerate(personal_items):
+                        if i == (num - 1):
+                            personal_items.delete_item(i)
+                            print(f"Number {num} has been Deleted\n")
+                    personal_items.save_items_to_csv()  
+                    
                 elif task_command == "switch":
                     tasklist_category = validate_category_number("Enter number to select task list: ")
                     tasklist_choice(tasklist_category)  
@@ -100,7 +105,7 @@ def main():
                 elif task_command == "complete":
                     count = business_items.get_item_count()
 
-                    num = validate_completed_number("Number: ", count)
+                    num = validate_user_number("Number: ", count)
                     for i, obj in enumerate(business_items):
                         if i == (num - 1):
                             obj.is_complete = True
@@ -108,7 +113,15 @@ def main():
                     business_items.save_items_to_csv()    
                     
                 elif task_command == "delete":
-                    print("Delete business elif") 
+                    count = business_items.get_item_count()
+
+                    num = validate_user_number("Number: ", count)
+                    for i, obj in enumerate(business_items):
+                        if i == (num - 1):
+                            business_items.delete_item(i)
+                            print(f"Number {num} has been Deleted\n")
+                    business_items.save_items_to_csv()  
+                      
                 elif task_command == "switch":
                     tasklist_category = validate_category_number("Enter number to select task list: ")
                     tasklist_choice(tasklist_category)   
