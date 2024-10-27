@@ -1,4 +1,3 @@
-
 def validate_category_number(category_number):
     while True:
         try:
@@ -29,9 +28,13 @@ def validate_tasklist_command(task_command):
             None
  
  
- 
-#  validate a completed item submission :  int() required           
-def validate_completed_number(question, count):
+     
+def validate_user_number(question, count):
+    """
+    validate a user number for: \n
+    completed item, or request to delete item \n
+    int() required  ...  (numbers 1 - list length)
+    """       
     while True:
         try:
             num = int(input(question))
@@ -40,7 +43,7 @@ def validate_completed_number(question, count):
             else:
                 print(f"Must be between 1 and {count}")
         except ValueError as e:
-            print(e, f"Must be between 1 and {count}")  
+            print(e, f"------->  Must be between 1 and {count}")  
             
             
                         
@@ -49,5 +52,5 @@ def check_tasks(task_command):
     
     for i in tasks:
         if i == task_command:
-            return i
+            return i  
         
